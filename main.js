@@ -54,16 +54,22 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 */
 
 function validateCred(array){
+//variable to hold the total sum from the Luhn algorithm
     let total = 0;
 
+ //looping through the array of credit cards
     for(let i = array.length - 1; i >= 0; i--){
+//variable to hold the current value when iterating        
         let currentValue = array[i];
+//an if statement to execute when the index value is an even number
+//i.e. array.length - 1 = 15, i = 15, % 2 will be 0  => will skip the if statement
         if((array.length -1 - i) % 2 === 1){
             currentValue *= 2;
             if(currentValue > 9){
                 currentValue -= 9
             }
         }
+//after each loop the value will be added to the total variable
         total += currentValue;
     }
     return total % 10 === 0;
