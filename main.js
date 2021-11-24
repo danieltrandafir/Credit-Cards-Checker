@@ -24,6 +24,33 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 
 // Add your functions below:
+
+//1st function, option 1
+function validateCred(array){
+//variable to hold the total sum from running the Luhn algorithm
+    let total = 0;
+
+ //looping through the array of credit cards
+    for(let i = array.length - 1; i >= 0; i--){
+//variable to hold the current value when iterating        
+        let currentValue = array[i];
+//an if statement to execute when the index value is an even number
+//i.e. array.length - 1 = 15, i = 15, % 2 will be 0  => will skip the if statement
+        if((array.length -1 - i) % 2 === 1){
+            currentValue *= 2;
+            if(currentValue > 9){
+                currentValue -= 9
+            }
+        }
+//after each loop the value will be added to the "total" variable
+        total += currentValue;
+    }
+//return true/false if the reminded of total is 0
+    return total % 10 === 0;
+}
+
+validateCred(valid1)
+//1st function option 2
 /*function validateCred(array){
     let newList = array.slice(0, -1);
     let revList = [];
@@ -53,43 +80,25 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 }
 */
 
-function validateCred(array){
-//variable to hold the total sum from the Luhn algorithm
-    let total = 0;
-
- //looping through the array of credit cards
-    for(let i = array.length - 1; i >= 0; i--){
-//variable to hold the current value when iterating        
-        let currentValue = array[i];
-//an if statement to execute when the index value is an even number
-//i.e. array.length - 1 = 15, i = 15, % 2 will be 0  => will skip the if statement
-        if((array.length -1 - i) % 2 === 1){
-            currentValue *= 2;
-            if(currentValue > 9){
-                currentValue -= 9
-            }
-        }
-//after each loop the value will be added to the total variable
-        total += currentValue;
-    }
-    return total % 10 === 0;
-}
-
-validateCred(valid1)
-
+//2nd function
 function findInvalidCards(nestedArray){
+//variable to hold the arrays of invalid cards
     let invalidCards = [];
-
+//looping through the nested arrays
     for(let j = 0; j <= nestedArray.length; j++){
+//variable to hold the current card in the nested arrays
         let currentCard = nestedArray[j];
+//checking if the current card is invalid using the 1st function 
         if(!validateCred(currentCard)){
+//all matching  arrays will be added to the array of invalid cards 
             invalidCards.push(currentCard)
         }
     }
+//function will return a nested array of invalid cards
     return invalidCards;
 }
 
-/*
+/* 3rd function, option 1
 function idInvalidCardCompanies(cardNumbers){
     const companies = [];
     for(i = 0; i < cardNumbers.length; i++){
@@ -115,12 +124,16 @@ function idInvalidCardCompanies(cardNumbers){
 }
 */
 
+//3rd function, option 2
 function idInvalidCardCompanies(nestedCards){
+//variable to hold the company names
     let companies = [];
-
+//looping through the nested cards array
     for(let x = 0; x < nestedCards; x++){
+//using a switch to check the 1st digit of each card array
         switch(nestedCards[x][0]){
             case 3:
+//if Amex is not an index in the variable 'companies'. execute statement
                 if(companies.indexOf('Amex') === -1){
                     companies.push('Amex')
                 }
@@ -136,6 +149,7 @@ function idInvalidCardCompanies(nestedCards){
                 if(companies.indexOf('Discover') === -1){
                     companies.push('Discover')
                 }
+//if the 1st digit in the array is not matched to any of the cases, execute default statement
             default:
                 console.log('Company name not found')
         }
