@@ -45,7 +45,7 @@ function validateCred(array){
 //after each loop the value will be added to the "total" variable
         total += currentValue;
     }
-//return true/false if the reminded of total is 0
+//return true/false if the reminder of total is 0
     return total % 10 === 0;
 }
 
